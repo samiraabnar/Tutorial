@@ -1,6 +1,9 @@
 
 import matplotlib.pyplot as plt
 from matplotlib import offsetbox
+import os
+import cv2
+import numpy as np
 
 # Scale and visualize the embedding vectors
 def plot_embedding(X, image_tags, title=None):
@@ -45,6 +48,15 @@ def load_images_from_folder(folder):
 
 
     return images, thumb_images
+
+
+
+def get_string(list_of_vec,VOCAB):
+    str = " "
+    for i in np.arange(len(list_of_vec)):
+        str += " "+VOCAB[np.argmax(list_of_vec[i])]
+
+    return str.strip()
 
 
 
