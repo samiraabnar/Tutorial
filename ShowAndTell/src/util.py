@@ -2,8 +2,8 @@
 import matplotlib.pyplot as plt
 from matplotlib import offsetbox
 import os
-import cv2
 import numpy as np
+from PIL import Image
 
 # Scale and visualize the embedding vectors
 def plot_embedding(X, image_tags, title=None):
@@ -34,7 +34,10 @@ def load_images_from_folder(folder):
     images = []
     thumb_images = []
     for filename in os.listdir(folder):
-        img = cv2.resize(cv2.imread(os.path.join(folder,filename)), (224, 224)).astype(np.float32)
+        
+        img = Image.open(os.path.join(folder,filename))
+        img = img.resize((224,224))
+        img = np.asarray(img, dtype='float32') / 256.
         img[:, :, 0] -= 103.939
         img[:, :, 1] -= 116.779
         img[:, :, 2] -= 123.68
@@ -43,7 +46,9 @@ def load_images_from_folder(folder):
         if img is not None:
             images.append(img)
 
-        img2 = cv2.resize(cv2.imread(os.path.join(folder, filename)), (20, 20)).astype(np.float32)
+        img2 = Image.open(os.path.join(folder,filename))
+        img2 = img2.resize((224,224))
+        img2 = np.asarray(img, dtype='float32') / 256.
         thumb_images.append(img2)
 
 
